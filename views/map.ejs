@@ -1,6 +1,12 @@
 <%- include("./partials/header.ejs") %>
 
 <div class="d-flex justify-content-center align-items-center">
+    <% if(locals.data) { %>
+        <h1>Altitude : <%= data.altitude %></h1>
+    <% } else { %>
+        <h1>Something went wrong with the api</h1>
+    <% } %>
+     
     <iframe src="https://free-map.org/#35.29912,-120.65827,15z" style="height: 700px; width: 70%;"></iframe>
 </div>
 
