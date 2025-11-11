@@ -7,9 +7,9 @@
     <link rel="icon" type="image/png" href="/images/iss.png" />
     <link rel="stylesheet" href="/bootstrap-5.3.8-dist/css/bootstrap.min.css" />
     <style>
-        body {
-            background-color: blanchedalmond;
-        }
+        /* body {
+            background-image: url("./images/galaxy.jpg");
+        } */
     </style>
 
 </head>
@@ -19,5 +19,17 @@
             Where in the World is the ISS?
         </h1>
     </header>
+    <script src="three.r134.min.js"></script>
+<script src="vanta.clouds.min.js"></script>
+<script>
+VANTA.CLOUDS({
+  el: "body",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 1000,
+  minWidth: 800
+})
+</script>
 </body>
 </html>
