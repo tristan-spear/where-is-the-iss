@@ -3,33 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Where is the ISS?</title>
+    <title>ISS Locator - International Space Station Tracker</title>
     <link rel="icon" type="image/png" href="/images/iss.png" />
     <link rel="stylesheet" href="/bootstrap-5.3.8-dist/css/bootstrap.min.css" />
-    <style>
-        /* body {
-            background-image: url("./images/galaxy.jpg");
-        } */
-    </style>
-
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header style="height: 100px; z-index: 1;" class="d-flex justify-content-center align-items-center bg-black text-white">
-        <h1>
-            Where in the World is the ISS?
-        </h1>
-    </header>
-    <script src="three.r134.min.js"></script>
-<script src="vanta.clouds.min.js"></script>
-<script>
-VANTA.CLOUDS({
-  el: "body",
-  mouseControls: true,
-  touchControls: true,
-  gyroControls: false,
-  minHeight: 1000,
-  minWidth: 800
-})
-</script>
-</body>
-</html>
+    <nav class="navbar navbar-expand-lg navbar-dark iss-navbar fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="/images/iss.png" alt="ISS" class="iss-logo me-2" />
+                <span class="brand-text">ISS Locator</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/map">Track ISS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/info">About ISS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/game">Space Game</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <script src="/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>

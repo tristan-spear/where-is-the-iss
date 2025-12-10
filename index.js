@@ -17,6 +17,14 @@ app.get("/", (req, res) => {
     res.render("home.ejs"); 
 });
 
+app.get("/info", (req, res) => {
+    res.render("info.ejs");
+});
+
+app.get("/game", (req, res) => {
+    res.render("game.ejs");
+});
+
 function roundTo3Decimals(num) {
   return Math.floor(num * 10000)/10000;
 }

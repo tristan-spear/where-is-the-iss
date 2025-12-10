@@ -5,51 +5,178 @@
   (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
     key: "<%= maps_key %>",
     v: "weekly",
-    // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
-    // Add other bootstrap parameters as needed, using camel case.
   });
-  
 </script>
 <% } %>
 
-<div class="d-flex justify-content-center align-items-center flex-column pt-5" style="position: relative; z-index: 100;">
-     
-    <% if(locals.data) { %>
+<div class="map-page">
+    <div class="stars"></div>
+    <div class="container py-5">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="page-title mb-3">ISS Real-Time Location</h1>
+                <p class="page-subtitle">Current position of the International Space Station</p>
+            </div>
+        </div>
 
-    <!-- <iframe src="https://free-map.org/#35.29912,-120.65827,15z" style="height: 700px; width: 70%;"></iframe> -->
-    <div>
-        <h4>Latidude : <%= data.latitude %></h1>
-        <h4>Longitude : <%= data.longitude %></h1>
-        <h4>Altitude : <%= data.altitude %></h1>
-        <gmp-map center=<%=data.center%> zoom="2.3" style="width: 600px; height: 400px; z-index: 2;" map-id="iss map">
-        </gmp-map>
+        <% if(locals.data) { %>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="iss-data-card">
+                    <div class="card-header-custom">
+                        <h3 class="card-title-custom">
+                            <svg class="me-2" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            Current Position
+                        </h3>
+                    </div>
+                    <div class="card-body-custom">
+                        <div class="data-row">
+                            <div class="data-label">Latitude</div>
+                            <div class="data-value"><%= data.latitude %>°</div>
+                        </div>
+                        <div class="data-row">
+                            <div class="data-label">Longitude</div>
+                            <div class="data-value"><%= data.longitude %>°</div>
+                        </div>
+                        <div class="data-row">
+                            <div class="data-label">Altitude</div>
+                            <div class="data-value"><%= data.altitude %></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="iss-info-card mt-4">
+                    <h4 class="info-title">Orbital Facts</h4>
+                    <ul class="info-list">
+                        <li>Orbital Speed: 17,500 mph</li>
+                        <li>Orbital Period: ~90 minutes</li>
+                        <li>Orbits per Day: ~16</li>
+                        <li>Inclination: 51.6°</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="map-container">
+                    <gmp-map center="<%=data.center%>" zoom="2.3" style="width: 100%; height: 600px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0, 150, 255, 0.3);" map-id="iss-map">
+                    </gmp-map>
+                </div>
+                <div class="text-center mt-4">
+                    <a class="btn btn-iss-secondary" href="/map">
+                        <svg class="me-2" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                        </svg>
+                        Refresh Location
+                    </a>
+                </div>
+            </div>
+        </div>
+        <% } else { %>
+        <div class="alert alert-warning text-center">
+            <h4>Unable to load ISS data</h4>
+            <p>Please try again later.</p>
+            <a class="btn btn-iss-primary mt-3" href="/map">Retry</a>
+        </div>
+        <% } %>
     </div>
-    <% } %>
-    <a class="btn btn-primary mt-5" href="/map">Reload</a>
 </div>
 
 <script>
     async function initMap() {
-    //  Request the needed libraries.
-    const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary("maps"),
-        google.maps.importLibrary("marker"),
-    ]);
-    // Get the gmp-map element.
-    const mapElement = document.querySelector("gmp-map");
-    // Get the inner map.
-    const innerMap = mapElement.innerMap;
-    // Set map options.
-    innerMap.setOptions({
-        mapTypeControl: false,
-    });
-    // Add a marker positioned at the map center (Uluru).
-    const marker = new AdvancedMarkerElement({
-        map: innerMap,
-        position: mapElement.center,
-        title: "Uluru/Ayers Rock",
-    });
+        try {
+            // Wait for Google Maps API
+            while (typeof google === 'undefined' || !google.maps) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+
+            // Request the needed libraries
+            const [{ Map }, { AdvancedMarkerElement, PinElement }] = await Promise.all([
+                google.maps.importLibrary("maps"),
+                google.maps.importLibrary("marker"),
+            ]);
+            
+            // Get the gmp-map element
+            const mapElement = document.querySelector("gmp-map");
+            if (!mapElement) {
+                console.error("gmp-map not found");
+                return;
+            }
+            
+            // Wait for innerMap to be available
+            let innerMap = mapElement.innerMap;
+            let attempts = 0;
+            while (!innerMap && attempts < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                innerMap = mapElement.innerMap;
+                attempts++;
+            }
+            
+            if (!innerMap) {
+                console.error("innerMap not available after waiting");
+                return;
+            }
+            
+            // Set map options with mapId (required for AdvancedMarkerElement)
+            innerMap.setOptions({
+                mapId: "iss-map",
+                mapTypeControl: false,
+            });
+            
+            // Wait a bit more for map to be fully ready
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Get center position - handle both string and object formats
+            let position;
+            if (typeof mapElement.center === 'string') {
+                const center = mapElement.center.split(',').map(Number);
+                position = { lat: center[0], lng: center[1] };
+            } else if (mapElement.center && typeof mapElement.center === 'object') {
+                position = mapElement.center;
+            } else {
+                // Fallback: get from the center attribute
+                const centerAttr = mapElement.getAttribute('center');
+                if (centerAttr) {
+                    const center = centerAttr.split(',').map(Number);
+                    position = { lat: center[0], lng: center[1] };
+                } else {
+                    console.error("Could not determine center position");
+                    return;
+                }
+            }
+            
+            console.log("Creating marker at:", position);
+            
+            // Create a custom pin for the ISS with space theme colors
+            const pinElement = new PinElement({
+                background: "#0096ff",
+                borderColor: "#00d4ff",
+                glyphColor: "#ffffff",
+                scale: 1.5,
+            });
+            
+            // Create marker with custom pin
+            const marker = new AdvancedMarkerElement({
+                map: innerMap,
+                position: position,
+                title: "International Space Station",
+                content: pinElement.element,
+            });
+            
+            console.log("Marker created:", marker);
+        } catch (error) {
+            console.error("Error in initMap:", error);
+        }
     }
-    initMap();
+    
+    // Wait for page to load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMap);
+    } else {
+        setTimeout(initMap, 500);
+    }
 </script>
+
 <%- include("./partials/footer.ejs") %>

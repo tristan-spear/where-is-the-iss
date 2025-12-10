@@ -1,8 +1,47 @@
 <%- include("./partials/header.ejs") %>
 
-<div style="height: 600px; position: relative; z-index: 100;" class="d-flex flex-column justify-content-center align-items-center">
-    <img src="./images/SpaceStation.png" style="width: 30%; margin-right: 20px;"/>
-    <a class="btn btn-primary mt-5" href="/map">Find ISS</a>
+<div class="hero-section">
+    <div class="stars"></div>
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6 hero-content">
+                <h1 class="hero-title mb-4">
+                    <span class="text-primary">Track the</span><br>
+                    <span class="text-white">International Space Station</span>
+                </h1>
+                <p class="hero-subtitle mb-4">
+                    Follow the ISS in real-time as it orbits Earth at 17,500 mph. 
+                    Discover its current location, altitude, and trajectory across the globe.
+                </p>
+                <div class="hero-stats mb-5">
+                    <div class="stat-item">
+                        <div class="stat-number">17,500</div>
+                        <div class="stat-label">mph</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">254</div>
+                        <div class="stat-label">miles</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">90</div>
+                        <div class="stat-label">minutes</div>
+                    </div>
+                </div>
+                <a class="btn btn-iss-primary btn-lg px-5 py-3" href="/map">
+                    <span>Track ISS Now</span>
+                    <svg class="ms-2" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="iss-illustration">
+                    <img src="/images/SpaceStation.png" alt="International Space Station" class="iss-image" />
+                    <div class="orbit-ring"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <%- include("./partials/footer.ejs") %>
